@@ -1,0 +1,14 @@
+{
+  "name": "mif-a",
+  "version": "1.0.0",
+  "description": "",
+  "main": "web-component.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "library-a": "^1.0.0"
+  }
+}

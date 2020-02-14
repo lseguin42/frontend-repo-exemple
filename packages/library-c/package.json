@@ -1,0 +1,13 @@
+{
+  "name": "library-c",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "ls"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+  }
+}

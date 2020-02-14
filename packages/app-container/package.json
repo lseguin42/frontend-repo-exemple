@@ -1,0 +1,20 @@
+{
+  "name": "app-container",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "library-c": "^1.0.0",
+    "mif-a": "^1.0.0",
+    "mif-b": "^1.0.0",
+    "webpack": "^4.41.6"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.11"
+  }
+}
