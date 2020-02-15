@@ -3,8 +3,9 @@
   "name": "angular-app-1",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "web-component.js",
   "scripts": {
+    "build": "echo noBuildYet",
     "test": "ls"
   },
   "author": "",

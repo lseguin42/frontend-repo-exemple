@@ -5,6 +5,7 @@
   "description": "",
   "main": "dist/main.js",
   "scripts": {
+    "build": "tsc",
     "test": "ls"
   },
   "author": "",

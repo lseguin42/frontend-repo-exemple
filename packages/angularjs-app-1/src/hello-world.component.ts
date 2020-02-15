@@ -1,41 +1,32 @@
 import * as angular from 'angular';
 
-class HelloWorldController {
-    name = 'HelloWorld AngularJS!';
-    constructor () {}
-}
-
 const HelloWorldModule = angular
     .module('helloWorldModule', [])
     .component('helloWorld', {
         template: '<div>{{ vm.name }}</div>',
-        controller: HelloWorldController,
+        controller: function () {
+          this.name = 'HelloWorld AngularJS!';
+        },
         controllerAs: 'vm',
     })
     .run(() => console.log('AngularJS is runing...'))
     .name;
 
-export class HelloWorldComponent extends HTMLElement {
-  static $injector: angular.auto.IInjectorService;
-  $scope: angular.IScope;
-  root: JQLite;
+const $injector = angular.bootstrap('<div></div>', [HelloWorldModule]);
 
-  constructor() {
-    super();
-  }
+/* WebComponent Wrapper */
+export class HelloWorldComponent extends HTMLElement {
+  private $scope: angular.IScope;
+  private root: JQLite;
 
   connectedCallback () {
-    if (!HelloWorldComponent.$injector) {
-      HelloWorldComponent.$injector = angular.bootstrap('<div></div>', [HelloWorldModule]);
-    }
-
     if (!this.shadowRoot) {
       this.attachShadow({ mode: 'open' });
       this.root = angular.element(this.shadowRoot as any);
     }
 
-    const $compile = HelloWorldComponent.$injector.get('$compile');
-    const $rootScope = HelloWorldComponent.$injector.get('$rootScope');
+    const $compile = $injector.get('$compile');
+    const $rootScope = $injector.get('$rootScope');
     const element = angular.element('<hello-world></hello-world>');
 
     this.$scope = $rootScope.$new(true);
