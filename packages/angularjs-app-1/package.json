@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "angularjs-app-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/main.js",
+  "scripts": {
+    "test": "ls"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.7.9"
+  },
+  "devDependencies": {
+    "@types/angular": "^1.6.57",
+    "typescript": "^3.7.5"
+  }
+}

@@ -1,12 +1,12 @@
 module.exports = {
   mode: 'development',
   entry: {
-    main: './index.js',
+    main: './src/main.js',
   },
   optimization: {
     splitChunks: {
       chunks: 'async',
-      minSize: 3,
+      minSize: 30000,
       maxSize: 0,
       minChunks: 1,
       maxAsyncRequests: 6,

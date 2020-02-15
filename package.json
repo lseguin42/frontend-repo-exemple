@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "lazy-load",
   "version": "1.0.0",
   "description": "",
@@ -10,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "lerna": "^3.20.2"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
