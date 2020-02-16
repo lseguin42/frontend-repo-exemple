@@ -3,9 +3,11 @@ import * as angular from 'angular';
 export const Ng1CommonModule = angular
     .module('myCommonModule', [])
     .service('SharedService', function () {
+      var value = 0;
       console.log('Init SharedService');
       return {
-        doSomething: () => console.log('do something...'),
+        get value() { return value },
+        inc: () => value++,
       };
     })
     .run(() => console.log('AngularJS (CommonModule) is runing...'))
