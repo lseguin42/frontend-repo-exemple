@@ -11,11 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "angular": "^1.7.9",
     "angularjs-common": "^1.0.0"
   },
   "devDependencies": {
-    "@types/angular": "^1.6.57",
     "typescript": "^3.7.5"
   }
 }
