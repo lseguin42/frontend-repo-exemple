@@ -14,7 +14,7 @@
   "dependencies": {
     "angular-app-1": "^1.0.0",
     "angularjs-app-1": "^1.0.0",
-    
+    "angularjs-app-2": "^1.0.0",
     "react-app-1": "^1.0.0",
     "react-app-2": "^1.0.0"
   },

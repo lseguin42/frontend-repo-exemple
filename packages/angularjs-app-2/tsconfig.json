@@ -1,0 +1,13 @@
+{
+    "files": ["./src/main.ts"],
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "target": "es6",
+        "sourceMap": true,
+        "module": "commonjs",
+        "declaration": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
