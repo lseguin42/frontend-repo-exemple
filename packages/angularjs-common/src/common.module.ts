@@ -16,18 +16,15 @@ export const $injector = angular.bootstrap('<div></div>', [Ng1CommonModule]);
 /* Ng1 WebComponent Wrapper */
 export abstract class Ng1WebComponent extends HTMLElement {
   protected abstract ng1Template: string;
+  protected abstract ng1Module: string;
   protected $scope: angular.IScope;
   protected root: JQLite;
   protected $injector = $injector;
 
   private disconnectorTimer: any = 0;
 
-  protected get ngModuleName(): string {
-    return (this.constructor as any).ng1Module;
-  }
-
   protected loadNgModule() {
-    this.$injector.loadNewModules([this.ngModuleName]);
+    this.$injector.loadNewModules([this.ng1Module]);
   }
 
   connectedCallback () {
