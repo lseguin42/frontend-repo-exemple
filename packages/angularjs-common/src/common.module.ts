@@ -22,17 +22,12 @@ export abstract class Ng1WebComponent extends HTMLElement {
 
   private disconnectorTimer: any = 0;
 
-  protected get ngModuleName() {
+  protected get ngModuleName(): string {
     return (this.constructor as any).ng1Module;
   }
 
-  protected ngModuleLoad() {
-    (this.constructor as any).ng1Loaded = true;
+  protected loadNgModule() {
     this.$injector.loadNewModules([this.ngModuleName]);
-  }
-
-  protected ngModuleIsLoaded(): boolean {
-    return !(this.constructor as any).ng1Loaded;
   }
 
   connectedCallback () {
@@ -42,11 +37,8 @@ export abstract class Ng1WebComponent extends HTMLElement {
       return;
     }
 
-    if (this.ngModuleIsLoaded()) {
-      this.ngModuleLoad();
-    }
-
     if (!this.shadowRoot) {
+      this.loadNgModule();
       this.attachShadow({ mode: 'open' });
       this.root = angular.element(this.shadowRoot as any);
     }
