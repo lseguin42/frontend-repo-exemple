@@ -5,7 +5,7 @@ export const Ng1CommonModule = angular
     .service('SharedService', function () {
       console.log('Init SharedService');
       return {
-        doSomthing: () => console.log('do something...'),
+        doSomething: () => console.log('do something...'),
       };
     })
     .run(() => console.log('AngularJS (CommonModule) is runing...'))
@@ -18,30 +18,41 @@ export abstract class Ng1WebComponent extends HTMLElement {
   protected abstract ng1Template: string;
   protected $scope: angular.IScope;
   protected root: JQLite;
+  protected $injector = $injector;
 
-  private get ng1Module() {
+  private disconnectorTimer: any = 0;
+
+  protected get ngModuleName() {
     return (this.constructor as any).ng1Module;
   }
 
-  private loadNg1Module() {
-    if (!(this.constructor as any).ng1Loaded) {
-      (this.constructor as any).ng1Loaded = true;
-      if (this.ng1Module) {
-        $injector.loadNewModules([this.ng1Module]);
-      }
-    }
+  protected ngModuleLoad() {
+    (this.constructor as any).ng1Loaded = true;
+    this.$injector.loadNewModules([this.ngModuleName]);
+  }
+
+  protected ngModuleIsLoaded(): boolean {
+    return !(this.constructor as any).ng1Loaded;
   }
 
   connectedCallback () {
-    this.loadNg1Module();
+    if (this.disconnectorTimer) {
+      clearTimeout(this.disconnectorTimer);
+      this.disconnectorTimer = 0;
+      return;
+    }
+
+    if (this.ngModuleIsLoaded()) {
+      this.ngModuleLoad();
+    }
 
     if (!this.shadowRoot) {
       this.attachShadow({ mode: 'open' });
       this.root = angular.element(this.shadowRoot as any);
     }
 
-    const $compile = $injector.get('$compile');
-    const $rootScope = $injector.get('$rootScope');
+    const $compile = this.$injector.get('$compile');
+    const $rootScope = this.$injector.get('$rootScope');
     const element = angular.element(this.ng1Template);
 
     this.$scope = $rootScope.$new(true);
@@ -51,6 +62,13 @@ export abstract class Ng1WebComponent extends HTMLElement {
   }
 
   disconnectedCallback() {
+    this.disconnectorTimer = setTimeout(() => {
+      this.disconnectorTimer = 0;
+      this.destroyScopeCallback();
+    }, 0);
+  }
+
+  destroyScopeCallback() {
     this.$scope.$destroy();
     this.shadowRoot.innerHTML = '';
   }
