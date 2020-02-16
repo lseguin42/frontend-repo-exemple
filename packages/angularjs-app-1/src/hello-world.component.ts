@@ -1,10 +1,11 @@
-import { $injector, Ng1CommonModule, Ng1WebComponent, angular } from 'angularjs-common';
+import { Ng1CommonModule, Ng1WebComponent, angular } from 'angularjs-common';
 
-const HelloWorldModule = angular
-    .module('helloWorldModule', [Ng1CommonModule])
+export class HelloWorldComponent extends Ng1WebComponent {
+  static ng1Module = angular
+    .module('helloWorldModule1', [Ng1CommonModule])
     .component('componentA', {
         template: '<div>{{ vm.name }}</div>',
-        controller: ['SharedService', function (SharedService) {
+        controller: ['SharedService', function (_) {
           this.name = 'HelloWorld AngularJS (A)!';
         }],
         controllerAs: 'vm',
@@ -12,8 +13,5 @@ const HelloWorldModule = angular
     .run(() => console.log('AngularJS (module 1) is runing...'))
     .name;
 
-$injector.loadNewModules([HelloWorldModule]);
-
-export class HelloWorldComponent extends Ng1WebComponent {
   ng1Template = '<component-a></component-a>';
 }
