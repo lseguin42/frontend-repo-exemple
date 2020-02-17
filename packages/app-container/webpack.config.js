@@ -19,7 +19,8 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: __dirname + '/dist'
+    path: __dirname + '/dist',
+    chunkFilename: '[name].bundle.js',
   },
   plugins: [new HtmlWebpackPlugin({ title: 'Demo App' })]
 };

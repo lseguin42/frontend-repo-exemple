@@ -19,27 +19,27 @@ template.querySelector('.button_4').addEventListener('click', action4);
 template.querySelector('.button_5').addEventListener('click', action5);
 
 async function action1() {
-    await import('react-app-1');
+    await import (/* webpackChunkName: "react-app-1" */ `react-app-1`);
     appContainer.innerHTML = '<react-app-1></react-app-1>';
 }
 
 async function action2() {
-    await import('react-app-2');
+    await import (/* webpackChunkName: "react-app-2" */ `react-app-2`);
     appContainer.innerHTML = '<react-app-2></react-app-2>';
 }
 
 async function action3() {
-    await import('angularjs-app-1');
+    await import (/* webpackChunkName: "angularjs-app-1" */ `angularjs-app-1`);
     appContainer.innerHTML = '<angularjs-app-1></angularjs-app-1>';
 }
 
 async function action4() {
-    await import('angularjs-app-2');
+    await import (/* webpackChunkName: "angularjs-app-1" */ `angularjs-app-1`);
     appContainer.innerHTML = '<angularjs-app-2></angularjs-app-2>';
 }
 
 async function action5() {
-    await Promise.all([import('angularjs-app-1'), import('angularjs-app-2')]);
+    await Promise.all([import(/* webpackChunkName: "angularjs-app-1" */ 'angularjs-app-1'), import(/* webpackChunkName: "angularjs-app-2" */ 'angularjs-app-2')]);
     appContainer.innerHTML = `
         <angularjs-app-1></angularjs-app-1>
         <angularjs-app-2></angularjs-app-2>
