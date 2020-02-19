@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
+    "build": "webpack -p",
     "dev": "webpack && http-server dist",
     "serve": "http-server dist"
   },
@@ -18,7 +18,8 @@
     "angularjs-app-2": "^1.0.0",
     "react-app-1": "^1.0.0",
     "react-app-2": "^1.0.0",
-    "vue-app-1": "^1.0.0"
+    "vue-app-1": "^1.0.0",
+    "rxjs": "6.5.4"
   },
   "devDependencies": {
     "html-webpack-plugin": "^3.2.0",

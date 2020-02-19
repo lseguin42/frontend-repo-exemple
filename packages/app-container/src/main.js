@@ -1,3 +1,6 @@
+import 'rxjs';
+import 'moment';
+
 const template = document.createElement('div');
 
 template.innerHTML = `

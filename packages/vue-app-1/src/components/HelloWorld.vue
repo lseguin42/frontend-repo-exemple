@@ -1,12 +1,23 @@
 <template>
-  <div class="hello">{{ msg }}</div>
+  <div class="hello">{{ msg }} - {{ now }} {{ rx }}
+    <div>OK</div>
+  </div>
 </template>
 
 <script>
+import moment from "moment";
+import {of} from "rxjs";
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  data() {
+    return {
+      rx: of({}),
+      now: moment()
+    }
   }
 }
 </script>

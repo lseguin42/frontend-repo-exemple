@@ -1,4 +1,6 @@
 import { Ng1CommonModule, Ng1WebComponent, angular } from 'angularjs-common';
+import { of } from 'rxjs';
+import moment from "moment";
 
 const Ng1HelloWorldModule2 = angular
   .module('helloWorldModule2', [Ng1CommonModule])
@@ -7,6 +9,10 @@ const Ng1HelloWorldModule2 = angular
     controller: ['SharedService', function (SharedService) {
       this.name = 'HelloWorld AngularJS (B)!';
       this.SharedService = SharedService;
+      of({}).subscribe(()=> {
+        console.log('loaded', moment());
+      });
+
     }],
     controllerAs: 'vm',
   })

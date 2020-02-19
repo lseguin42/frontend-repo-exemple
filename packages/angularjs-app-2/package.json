@@ -11,7 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "angularjs-common": "^1.0.0"
+    "angularjs-common": "^1.0.0",
+    "rxjs": "6.5.4",
+    "moment": "2.24.0"
   },
   "devDependencies": {
     "typescript": "^3.7.5"
