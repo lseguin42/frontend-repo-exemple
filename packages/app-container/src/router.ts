@@ -6,6 +6,7 @@ export interface Route {
 
 export class Router {
     protected activeRoute: Route = null;
+    loadingTemplate = '<div>module is loading...</div>';
 
     constructor(
         private routes: Route[],
@@ -16,7 +17,11 @@ export class Router {
         return location.hash;
     }
 
-    protected handleRouting() {
+    protected loading() {
+        this.mountPoint.innerHTML = this.loadingTemplate;
+    }
+
+    protected async handleRouting() {
         const location = this.currentLocation();
         for (const route of this.routes) {
             if (route.test.test(location)) {
@@ -24,8 +29,11 @@ export class Router {
                     return;
                 }
                 this.activeRoute = route;
-                route.loader();
-                this.mountPoint.innerHTML = route.template;
+                this.loading();
+                await route.loader();
+                if (this.activeRoute === route) {
+                    this.mountPoint.innerHTML = route.template;
+                }
                 return;
             }
         }
