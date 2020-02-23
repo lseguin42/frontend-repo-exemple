@@ -1,5 +1,7 @@
 import { Router } from './router';
 import { routes } from './routes';
 
-const router = new Router(routes, document.body.querySelector('#container'));
+const appContainer: HTMLElement = document.body.querySelector('#container');
+const router = new Router(routes, appContainer);
+
 router.bootstrap();
