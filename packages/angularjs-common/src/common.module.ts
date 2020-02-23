@@ -22,19 +22,22 @@ export abstract class Ng1WebComponent extends HTMLElement {
   protected $scope: angular.IScope;
   protected root: JQLite;
   protected $injector = $injector;
-
+  private isBuilt = false;
   private disconnectorTimer: any = 0;
+
+  public keepAlive = false;
 
   protected loadNgModule() {
     this.$injector.loadNewModules([this.ng1Module]);
   }
 
   connectedCallback () {
-    if (this.disconnectorTimer) {
-      clearTimeout(this.disconnectorTimer);
-      this.disconnectorTimer = 0;
+    clearTimeout(this.disconnectorTimer);
+
+    if (this.isBuilt) {
       return;
     }
+    this.isBuilt = true;
 
     if (!this.shadowRoot) {
       this.loadNgModule();
@@ -54,13 +57,17 @@ export abstract class Ng1WebComponent extends HTMLElement {
 
   disconnectedCallback() {
     this.disconnectorTimer = setTimeout(() => {
+      if (this.keepAlive) {
+        return;
+      }
       this.disconnectorTimer = 0;
-      this.destroyScopeCallback();
+      this.destroyAngularScope();
     }, 0);
   }
 
-  destroyScopeCallback() {
+  destroyAngularScope() {
     this.$scope.$destroy();
     this.shadowRoot.innerHTML = '';
+    this.isBuilt = false;
   }
 }

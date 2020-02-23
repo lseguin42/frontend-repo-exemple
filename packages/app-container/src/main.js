@@ -1,55 +1,51 @@
-const template = document.createElement('div');
+const router = [
+    {
+        route: /^\#\/react-app-1/,
+        loader: () => import(/* webpackChunkName: "react-app-1" */ 'react-app-1'),
+        template: '<react-app-1></react-app-1>',
+    },
+    {
+        route: /^\#\/react-app-2/,
+        loader: () => import(/* webpackChunkName: "react-app-2" */ 'react-app-2'),
+        template: '<react-app-2></react-app-2>',
+    },
+    {
+        route: /^\#\/angularjs-app-1($|\/)/,
+        loader: () => import(/* webpackChunkName: "angularjs-app-1" */ 'angularjs-app-1'),
+        template: '<angularjs-app-1></angularjs-app-1>',
+    },
+    {
+        route: /^\#\/angularjs-app-2/,
+        loader: () => import(/* webpackChunkName: "angularjs-app-2" */ 'angularjs-app-2'),
+        template: '<angularjs-app-2></angularjs-app-2>',
+    },
+    {
+        route: /^\#\/angularjs-app-1and2/,
+        loader: () => Promise.all([
+            import(/* webpackChunkName: "angularjs-app-1" */ 'angularjs-app-1'),
+            import(/* webpackChunkName: "angularjs-app-2" */ 'angularjs-app-2'),
+        ]),
+        template: '<angularjs-app-1></angularjs-app-1><angularjs-app-2></angularjs-app-2>',
+    },
+    {
+        route: /^\#\/vue-app-1/,
+        loader: () => import(/* webpackChunkName: "vue-app-1" */ 'vue-app-1'),
+        template: '<vue-app-1></vue-app-1>',
+    },
+];
 
-template.innerHTML = `
-    <button class="button_1">react (1)</button>
-    <button class="button_2">react (2)</button>
-    <button class="button_3">angularjs (1)</button>
-    <button class="button_4">angularjs (2)</button>
-    <button class="button_5">angularjs (1) + angularjs (2)</button>
-    <button class="button_6">vuejs (1)</button>
-    <div id="appContainer"></div>
-`;
-document.body.appendChild(template);
+const container = document.body.querySelector('#container');
 
-const appContainer = template.querySelector('#appContainer');
-
-template.querySelector('.button_1').addEventListener('click', action1);
-template.querySelector('.button_2').addEventListener('click', action2);
-template.querySelector('.button_3').addEventListener('click', action3);
-template.querySelector('.button_4').addEventListener('click', action4);
-template.querySelector('.button_5').addEventListener('click', action5);
-template.querySelector('.button_6').addEventListener('click', action6);
-
-async function action1() {
-    import(/* webpackChunkName: "react-app-1" */ 'react-app-1');
-    appContainer.innerHTML = '<react-app-1></react-app-1>';
+function handleRouting() {
+    const hash = location.hash;
+    for (let route of router) {
+        if (route.route.test(hash)) {
+            route.loader();
+            container.innerHTML = route.template;
+            return;
+        }
+    }
+    container.innerHTML = '';
 }
-
-async function action2() {
-    import(/* webpackChunkName: "react-app-2" */ 'react-app-2');
-    appContainer.innerHTML = '<react-app-2></react-app-2>';
-}
-
-async function action3() {
-    import(/* webpackChunkName: "angularjs-app-1" */ 'angularjs-app-1');
-    appContainer.innerHTML = '<angularjs-app-1></angularjs-app-1>';
-}
-
-async function action4() {
-    import(/* webpackChunkName: "angularjs-app-2" */ 'angularjs-app-2');
-    appContainer.innerHTML = '<angularjs-app-2></angularjs-app-2>';
-}
-
-async function action5() {
-    import(/* webpackChunkName: "angularjs-app-1" */ 'angularjs-app-1'),
-    import(/* webpackChunkName: "angularjs-app-2" */ 'angularjs-app-2'),
-    appContainer.innerHTML = `
-        <angularjs-app-1></angularjs-app-1>
-        <angularjs-app-2></angularjs-app-2>
-    `;
-}
-
-async function action6() {
-    import(/* webpackChunkName: "vue-app-1" */ 'vue-app-1');
-    appContainer.innerHTML = '<vue-app-1></vue-app-1>';
-}
+window.addEventListener('hashchange', handleRouting, false);
+handleRouting();

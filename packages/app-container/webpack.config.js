@@ -22,5 +22,8 @@ module.exports = {
     path: __dirname + '/dist',
     chunkFilename: '[name].bundle.js',
   },
-  plugins: [new HtmlWebpackPlugin({ title: 'Demo App' })]
+  plugins: [new HtmlWebpackPlugin({
+    title: 'Demo App',
+    template: 'src/index.html'
+  })]
 };
