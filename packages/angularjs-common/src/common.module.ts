@@ -20,15 +20,17 @@ export abstract class Ng1WebComponent extends HTMLElement {
   protected abstract ng1Template: string;
   protected abstract ng1Module: string;
   protected $scope: angular.IScope;
-  protected root: JQLite;
-  protected $injector = $injector;
   private isBuilt = false;
   private disconnectorTimer: any = 0;
 
   public keepAlive = false;
 
   protected loadNgModule() {
-    this.$injector.loadNewModules([this.ng1Module]);
+    $injector.loadNewModules([this.ng1Module]);
+  }
+
+  get root() {
+    return angular.element(this.shadowRoot as any);
   }
 
   connectedCallback () {
@@ -42,16 +44,14 @@ export abstract class Ng1WebComponent extends HTMLElement {
     if (!this.shadowRoot) {
       this.loadNgModule();
       this.attachShadow({ mode: 'open' });
-      this.root = angular.element(this.shadowRoot as any);
     }
 
-    const $compile = this.$injector.get('$compile');
-    const $rootScope = this.$injector.get('$rootScope');
-    const element = angular.element(this.ng1Template);
+    const $compile = $injector.get('$compile');
+    const $rootScope = $injector.get('$rootScope');
 
     this.$scope = $rootScope.$new(true);
+    const element = $compile(this.ng1Template)(this.$scope);
     this.root.append(element);
-    $compile(element)(this.$scope);
     this.$scope.$apply();
   }
 
@@ -66,8 +66,9 @@ export abstract class Ng1WebComponent extends HTMLElement {
   }
 
   destroyAngularScope() {
+    this.root.children().remove();
     this.$scope.$destroy();
-    this.shadowRoot.innerHTML = '';
+    this.$scope = null;
     this.isBuilt = false;
   }
 }
