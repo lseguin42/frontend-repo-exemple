@@ -6,14 +6,14 @@ export interface Route {
 
 export class Router {
     protected activeRoute: Route = null;
-    loadingTemplate = '<div>module is loading...</div>';
 
     constructor(
         private routes: Route[],
         private mountPoint: HTMLElement,
+        private loadingTemplate = '<div>module is loading...</div>',
     ) {}
 
-    protected currentLocation() {
+    protected getCurrentLocation() {
         return location.hash;
     }
 
@@ -22,7 +22,7 @@ export class Router {
     }
 
     protected async handleRouting() {
-        const location = this.currentLocation();
+        const location = this.getCurrentLocation();
         for (const route of this.routes) {
             if (route.test.test(location)) {
                 if (this.activeRoute === route) {
