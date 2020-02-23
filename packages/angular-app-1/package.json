@@ -3,7 +3,8 @@
   "name": "angular-app-1",
   "version": "1.0.0",
   "description": "",
-  "main": "web-component.js",
+  "main": "web-component",
+  "module": "web-component.js",
   "scripts": {
     "build": "echo noBuildYet",
     "test": "ls"

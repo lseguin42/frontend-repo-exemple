@@ -1,0 +1,13 @@
+{
+    "files": ["./src/main.ts"],
+    "compilerOptions": {
+        "target": "es2015",
+        "removeComments": false,
+        "lib": ["dom", "es2015"],
+        "moduleResolution": "node",
+        "module": "esnext"
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

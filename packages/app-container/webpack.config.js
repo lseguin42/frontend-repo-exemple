@@ -1,9 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: {
-    main: './src/main.js',
+    main: './src/main.ts',
   },
   optimization: {
     splitChunks: {
@@ -16,6 +16,17 @@ module.exports = {
       automaticNameDelimiter: '~',
       automaticNameMaxLength: 30,
     }
+  },
+  resolve: {
+    extensions: [".ts", ".js"]
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        loader: "ts-loader"
+      }
+    ]
   },
   output: {
     filename: '[name].js',

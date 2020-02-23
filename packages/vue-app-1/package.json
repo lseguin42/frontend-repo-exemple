@@ -2,7 +2,8 @@
   "name": "vue-app-1",
   "version": "1.0.0",
   "private": true,
-  "main": "dist/my-component.esm.js",
+  "main": "dist/my-component.esm",
+  "module": "dist/my-component.esm.js",
   "scripts": {
     "build": "rollup --config rollup.config.js"
   },
