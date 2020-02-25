@@ -1,13 +1,19 @@
 import { Ng1CommonModule, Ng1WebComponent, angular } from 'angularjs-common';
+import template from './hello-world.component.html';
+import stylesheet from './hello-world.component.less';
 
 const Ng1HelloWorldModule2 = angular
   .module('helloWorldModule2', [Ng1CommonModule])
   .component('componentB', {
-    template: '<div ng-click="vm.SharedService.inc()">{{ vm.name }} -> {{ vm.SharedService.value }}</div>',
+    template,
     controller: ['SharedService', function (SharedService) {
       this.name = 'HelloWorld AngularJS (B)!';
       this.SharedService = SharedService;
     }],
+    bindings: {
+      foo: '=',
+      onAction: '&'
+    },
     controllerAs: 'vm',
   })
   .run(() => console.log('AngularJS (module 2) is runing...'))
@@ -15,5 +21,15 @@ const Ng1HelloWorldModule2 = angular
 
 export class HelloWorldComponent extends Ng1WebComponent {
   ng1Module = Ng1HelloWorldModule2;
-  ng1Template = '<component-b></component-b>';
+  ng1Template = '<component-b foo="vm.foo" on-action="vm.onAction($event)"></component-b>';
+  ng1Stylesheet = stylesheet;
+  ng1ControllerAs = 'vm';
+
+  constructor() {
+    super(['foo']);
+  }
+
+  onAction(data) {
+    this.dispatchEvent(new CustomEvent('MyAction', { detail: data }));
+  }
 }

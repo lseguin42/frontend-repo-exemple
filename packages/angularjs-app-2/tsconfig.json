@@ -6,8 +6,11 @@
         "sourceMap": true,
         "module": "es6",
         "moduleResolution": "node",
-        "declaration": true
+        "declaration": true,
     },
+    "include": [
+        "./typings/declaration.d.ts"
+    ],
     "exclude": [
         "node_modules"
     ]
