@@ -21,16 +21,16 @@ const Ng1HelloWorldModule2 = angular
 
 export class HelloWorldComponent extends Ng1WebComponent {
   ng1Module = Ng1HelloWorldModule2;
+  ng1Stylesheet = stylesheet;
   ng1Template = `<component-b
     foo="$ctrl.foo"
     on-action="$ctrl.onAction($event)"
   ></component-b>`;
-  ng1Stylesheet = stylesheet;
 
   @Bind() foo: string = 'my-default-value';
 
   @Attach()
-  onAction(data) {
+  protected onAction(data) {
     this.dispatchEvent(new CustomEvent('MyAction', { detail: data }));
   }
 }
