@@ -49,7 +49,7 @@ export abstract class Ng1WebComponent extends HTMLElement {
 
     private $apply() {
       if (this.$scope) {
-        this.$scope.$apply();
+        this.$scope.$applyAsync();
       }
     }
 
