@@ -1,3 +1,3 @@
-import { HelloWorldComponent } from './hello-world.component';
+import { HelloWorldComponent } from './components';
 
 customElements.define('angularjs-app-2', HelloWorldComponent);
