@@ -8,10 +8,13 @@ export abstract class Ng1WebComponent extends HTMLElement {
     protected ng1Stylesheet: string = '';
     protected ng1ControllerAs = '$ctrl';
     protected $scope: angular.IScope & { props?: { [propName: string]: any } };
-    protected $ctrl: any = {};
     protected root: JQLite;
+
+    private $ctrl: any = {};
     private isBuilt = false;
     private disconnectorTimer: any = 0;
+
+    public keepAlive = false;
 
     constructor() {
       super();
@@ -32,8 +35,6 @@ export abstract class Ng1WebComponent extends HTMLElement {
         this.$ctrl[prop] = (...args) => this[prop](...args);
       }
     }
-  
-    public keepAlive = false;
 
     private getBindings(): string[] {
       return (this.constructor as any).__bindings || [];
