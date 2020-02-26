@@ -1,4 +1,4 @@
-import { Ng1CommonModule, Ng1WebComponent, angular } from 'angularjs-common';
+import { Ng1CommonModule, Ng1WebComponent, Bind, Attach, angular } from 'angularjs-common';
 import template from './hello-world.component.html';
 import stylesheet from './hello-world.component.less';
 
@@ -21,14 +21,12 @@ const Ng1HelloWorldModule2 = angular
 
 export class HelloWorldComponent extends Ng1WebComponent {
   ng1Module = Ng1HelloWorldModule2;
-  ng1Template = '<component-b foo="vm.foo" on-action="vm.onAction($event)"></component-b>';
+  ng1Template = '<component-b foo="$ctrl.foo" on-action="$ctrl.onAction($event)"></component-b>';
   ng1Stylesheet = stylesheet;
-  ng1ControllerAs = 'vm';
 
-  constructor() {
-    super(['foo']);
-  }
+  @Bind() foo: string = 'my-default-value';
 
+  @Attach()
   onAction(data) {
     this.dispatchEvent(new CustomEvent('MyAction', { detail: data }));
   }

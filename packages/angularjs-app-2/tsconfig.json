@@ -1,6 +1,7 @@
 {
     "files": ["./src/main.ts"],
     "compilerOptions": {
+        "experimentalDecorators": true,
         "outDir": "./dist/",
         "target": "es6",
         "sourceMap": true,

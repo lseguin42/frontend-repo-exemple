@@ -6,29 +6,42 @@ export abstract class Ng1WebComponent extends HTMLElement {
     protected abstract ng1Template: string;
     protected abstract ng1Module: string;
     protected ng1Stylesheet: string = '';
-    protected ng1ControllerAs = '';
+    protected ng1ControllerAs = '$ctrl';
     protected $scope: angular.IScope & { props?: { [propName: string]: any } };
+    protected $ctrl: any = {};
     protected root: JQLite;
     private isBuilt = false;
     private disconnectorTimer: any = 0;
 
-    private props: { [propName: string]: any } = {};
-
-    constructor(bindProps: string[] = []) {
+    constructor() {
       super();
 
-      for (const prop of bindProps) {
+      const bindings = this.getBindings();
+      for (const prop of bindings) {
         Object.defineProperty(this, prop, {
-          get: () => this.props[prop],
+          get: () => this.$ctrl[prop],
           set: (value) => {
-            this.props[prop] = value;
+            this.$ctrl[prop] = value;
             this.$apply();
           },
         });
       }
+
+      const methods = this.getAttachedMethods();
+      for (const prop of methods) {
+        this.$ctrl[prop] = (...args) => this[prop](...args);
+      }
     }
   
     public keepAlive = false;
+
+    private getBindings(): string[] {
+      return (this.constructor as any).__bindings || [];
+    }
+
+    private getAttachedMethods(): string[] {
+      return (this.constructor as any).__attached || [];
+    }
   
     protected loadNgModule() {
       $injector.loadNewModules([this.ng1Module]);
@@ -68,15 +81,12 @@ export abstract class Ng1WebComponent extends HTMLElement {
       this.$scope = $rootScope.$new(true);
 
       if (this.ng1ControllerAs) {
-        this.$scope[this.ng1ControllerAs] = new Proxy(this, {
-          get: (ctrl, propName: any) => {
-            if (typeof this[propName] == 'function') {
-              return this[propName].bind(this);
-            }
-            return this[propName];
+        this.$scope[this.ng1ControllerAs] = new Proxy(this.$ctrl, {
+          get: (_, propName: any) => {
+            return this.$ctrl[propName];
           },
           set: (_, propName: any, value: any) => {
-            this.props[propName] = value;
+            this.$ctrl[propName] = value;
             this.dispatchEvent(new CustomEvent(`${propName}`, { detail: value }));
             return true;
           },
