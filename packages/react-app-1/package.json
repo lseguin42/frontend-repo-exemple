@@ -20,7 +20,7 @@
   "devDependencies": {
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
-    "source-map-loader": "^0.2.4",
+    "source-map-loader": "^4.0.1",
     "typescript": "^3.7.5"
   }
 }
